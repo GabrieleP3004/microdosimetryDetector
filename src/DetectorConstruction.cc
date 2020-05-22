@@ -606,9 +606,16 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 void DetectorConstruction::ConstructSDandField()
 {
-	std::ostringstream outName; outName << "SV_log_" << sensitiveVolumeToOutput;
+	
+	SensitiveDetector* SD[4];
+	for (int i=0; i<4; i++)
+	{
 
-	SensitiveDetector* SD = new SensitiveDetector("SD", "DetectorHitsCollection", analysis);
-	G4SDManager::GetSDMpointer()->AddNewDetector(SD);
-	SetSensitiveDetector(outName.str(), SD);	
+		std::ostringstream outName; outName << "SV_log_" << i;
+		std::ostringstream SDname; SDname << "SD" << i;
+		std::ostringstream HitName; HitName << "Detector" << i << "HitsCollection";
+		SD[i] = new SensitiveDetector(SDname.str(), HitName.str(), analysis);
+		G4SDManager::GetSDMpointer()->AddNewDetector(SD[i]);
+		SetSensitiveDetector(outName.str(), SD[i]);
+	}
 }

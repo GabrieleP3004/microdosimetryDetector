@@ -45,11 +45,12 @@ SteppingAction::SteppingAction(AnalysisManager* pAnalysis)
 	fSecondary = 0;
 	
 	// set the name of the active volume
-	std::ostringstream name;
-	name << "SV_phys_" << DetectorConstruction::getActiveSVno();
-	activeVolumeName = name.str();
-	
-	G4cout << "Outputting sensitive volume: " << activeVolumeName << G4endl;
+	for (int i=0; i<4; i++)
+	{
+		std::ostringstream name;
+		name << "SV_phys_" << i;
+		activeVolumeName[i] = name.str();
+	}
 }
 
 SteppingAction::~SteppingAction()
@@ -76,18 +77,21 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
       // G4String process = (*fSecondary)[lp1]-> GetCreatorProcess()-> GetProcessName();   // process creating it
        G4double charge = (*fSecondary)[lp1] -> GetDynamicParticle() -> GetDefinition() -> GetPDGCharge();
        G4int AA = (*fSecondary)[lp1] -> GetDynamicParticle() -> GetDefinition() -> GetBaryonNumber();
-          
-     if (volumeName == activeVolumeName)
-	 {
-	   if ((secondaryParticleName == "proton") ||
-               (secondaryParticleName == "neutron")||
-               (secondaryParticleName == "alpha") ||
-               (secondaryParticleName == "deuton") || 
-               (secondaryParticleName == "triton") || 
-               (secondaryParticleName == "He3") || 
-	       (secondaryParticleName =="GenericIon"))
-               analysis -> FillSecondaries(AA, charge, secondaryParticleKineticEnergy); 	
-          }
+        
+	for (int i=0; i<4; i++)
+	{  
+	     if (volumeName == activeVolumeName[i])
+		 {
+		   if ((secondaryParticleName == "proton") ||
+       	        (secondaryParticleName == "neutron")||
+        	       (secondaryParticleName == "alpha") ||
+        	       (secondaryParticleName == "deuton") || 
+        	       (secondaryParticleName == "triton") || 
+        	       (secondaryParticleName == "He3") || 
+		       (secondaryParticleName =="GenericIon"))
+        	       analysis -> FillSecondaries(AA, charge, secondaryParticleKineticEnergy, i); 	
+        	  }
+	}
    }
 }
 

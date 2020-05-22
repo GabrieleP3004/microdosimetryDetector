@@ -48,8 +48,12 @@ SensitiveDetector::SensitiveDetector(const G4String& name,
 	
 	// retrieve the name of the active volume
 	std::ostringstream AVname;
-	AVname << "SV_phys_" << DetectorConstruction::getActiveSVno();
+	//AVname << "SV_phys_" << DetectorConstruction::getActiveSVno();
+	AVname << "SV_phys_" << name.at(2);
+
 	activeVolumeName = AVname.str();
+	std::ostringstream SVid_str; SVid_str << name.at(2);
+	std::istringstream(SVid_str.str()) >> SVid;
 
 	// initialize the private variables for primaries energy lost calculation
 	firstStep=true;
@@ -147,11 +151,11 @@ void SensitiveDetector::EndOfEvent(G4HCofThisEvent*)
 
 
 	if (totalEdepInOneEvent!=0)
-		analysis-> StoreEnergyDeposition(totalEdepInOneEvent, totalPathLengthInOneEvent);
+		analysis-> StoreEnergyDeposition(totalEdepInOneEvent, totalPathLengthInOneEvent, SVid);
 
 	G4double elost = Ek_in - Ek_out;
 	if (elost>0)
-		analysis-> StorePrimaryEnergyLost(elost, Ek_in, Ek_out);
+		analysis-> StorePrimaryEnergyLost(elost, Ek_in, Ek_out, SVid);
 	// restore private variables to default values
 	firstStep=true;
 	Ek_in=0.;

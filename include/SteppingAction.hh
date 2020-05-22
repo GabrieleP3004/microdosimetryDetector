@@ -51,6 +51,6 @@ private:
 	AnalysisManager* analysis; 
 	G4TrackVector* fSecondary;
 	
-	G4String activeVolumeName;
+	G4String activeVolumeName[4];
 };
 #endif

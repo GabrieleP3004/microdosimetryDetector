@@ -61,6 +61,7 @@ class SensitiveDetector : public G4VSensitiveDetector
 	G4bool firstStep;
 	G4double Ek_in;
 	G4double Ek_out;
+	G4int SVid;
 
 };
 
