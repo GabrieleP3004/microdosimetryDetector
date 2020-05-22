@@ -51,5 +51,6 @@ void GeneratePrimaries(G4Event* anEvent);
 private:  
 G4GeneralParticleSource* gun;
 AnalysisManager* analysis;
+G4int numEv;
 };
 #endif

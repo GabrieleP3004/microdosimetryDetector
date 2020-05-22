@@ -46,6 +46,15 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
 	gun -> GeneratePrimaryVertex(anEvent);
 	
+	//print the number of events every NP events
+	G4double NP=1000000.;
+	numEv=numEv+1;
+	G4double numD=numEv/NP;
+	G4int numI=numEv/NP;
+	if (numD==numI) {
+		G4cout << "Number of events = " << numEv << G4endl;
+	}
+
 	//fill the firt ntuple
 	G4double energy = gun -> GetParticleEnergy();
 	analysis -> SetPrimaryEnergy(energy); 

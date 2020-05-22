@@ -48,7 +48,7 @@ void AnalysisManager::book()
 { 
 	G4AnalysisManager* manager = G4AnalysisManager::Instance();
   
-	manager->SetVerboseLevel(2);
+	manager->SetVerboseLevel(1);
  
 	// Create a root file
 	G4String fileName = "output.csv";
