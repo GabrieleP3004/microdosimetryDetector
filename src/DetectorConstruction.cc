@@ -199,7 +199,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		//World
 		world = new G4Box("world_vol", worldx, worldy, worldz);
 		//chamVol
-		chamVol = new G4Box("chamVol", chamVol_x, chamVol_y, chamVol_z);
+		//chamVol = new G4Box("chamVol", chamVol_x, chamVol_y, chamVol_z);
+		G4double chamVol_box_rz= 1.1*sqrt(2*pow(highPVol_x, 2));
+		chamVol = new G4Cons("chamVol", 0.*mm, chamVol_box_rz, 0.*mm, chamVol_rZ, chamVol_z, 0*deg, 360*deg); //the most "time-efficient" shape for the air-volume remain the con as it tightens on the smaller detector area.
 		//highPVol
 		highPVol = new G4Box("highPVol", highPVol_x, highPVol_y, highPVol_z);
 		//Sensitive Volumes
