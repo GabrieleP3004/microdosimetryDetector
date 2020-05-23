@@ -58,7 +58,7 @@
 #ifndef USING_SILICON 
 	G4int DetectorConstruction::detector_shape = 0; // 0=Box, 1=Cylinder
 	G4double DetectorConstruction::detector_dimension = 300.*micrometer; // set detector main dimension: box-Side or cylinder-Diameter
-	G4double DetectorConstruction::detector_thickness = 100.*micrometer; // set detector thickness
+	G4double DetectorConstruction::detector_thickness = 1.*micrometer; // set detector thickness
 	G4double DetectorConstruction::dd = 30.*millimeter; // detecotr-source distance. NB change GPS source settings as well!!
 	G4int DetectorConstruction::sensitiveVolumeToOutput = 0; // this parameter is fixed and does not matter for this diamond configuration.
 #else
