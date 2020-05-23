@@ -34,7 +34,8 @@
 PrimaryGeneratorAction::PrimaryGeneratorAction(AnalysisManager* pAnalysis)
 {
 	gun = new G4GeneralParticleSource();
-	analysis = pAnalysis;       
+	analysis = pAnalysis;
+	numEv=0;
 }
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction()
