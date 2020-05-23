@@ -56,5 +56,7 @@ private:
 
 	static G4double detector_thickness;
 	static G4double dd;
+	static G4int detector_shape;
+	static G4double detector_dimension;
 };
 #endif
