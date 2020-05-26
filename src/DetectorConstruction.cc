@@ -55,9 +55,9 @@
 // set the active SV to output
 // being static, they can be accessed from the SteppinAction
 #ifndef USING_SILICON 
-	G4int DetectorConstruction::sensitiveVolumeToOutput = 1;	// 0=50x50, 1=300x300, 2=100x100, 3=200x200
 	G4double DetectorConstruction::detector_thickness = 8.*micrometer; // set detector thickness
 	G4double DetectorConstruction::dd = 24.*millimeter; // detecotr-source distance. NB change GPS source settings as well!!
+	G4int DetectorConstruction::sensitiveVolumeToOutput = 0; // This parameter is "fixed" and does not matter for this diamond configuration as all 4 volumes are considered
 #else
 	G4int DetectorConstruction::sensitiveVolumeToOutput = 12;	// the one in the very middle 
 #endif
