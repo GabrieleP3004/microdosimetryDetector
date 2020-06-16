@@ -86,7 +86,7 @@ void AnalysisManager::book()
 	manager -> FinishNtuple();
 
 	// creating Energy lost by primaries Ntuple
-	manager -> CreateNtuple("2b_energy_lost", "energy_lost");
+	manager -> CreateNtuple("2b_energy_released", "energy_released");
 	fNtColId[6] = manager -> CreateNtupleDColumn("Elost_keV");
 	fNtColId[7] = manager -> CreateNtupleDColumn("Ein_keV");
 	fNtColId[8] = manager -> CreateNtupleDColumn("Eout_keV");
