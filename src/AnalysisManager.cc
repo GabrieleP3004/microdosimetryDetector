@@ -66,84 +66,81 @@ void AnalysisManager::book()
 
 	manager->SetFirstNtupleId(1);
 
-	
+/*	//Create Primary Energy Ntuple
+	manager -> CreateNtuple("1_primary_energy", "primary_energy");
+	fNtColId[0] = manager -> CreateNtupleDColumn("E_keV");
+	manager -> FinishNtuple();
+*/
+	// Create 4 series of Ntuple for the 4 detectors
 	G4double SVside[4] = { 50, 300., 100., 200.};
 	for (int i=0; i<4; i++)
 	{
-	//Create Energy Deposition within SV Ntuple
-	std::ostringstream ntName1; ntName1 <<1+3*i<< "_deposited_energy_"<< SVside[i] << "um";
-	std::ostringstream ntTitle1; ntTitle1 << "deposited_energy_in" << SVside[i] << "um_side_SV";
-	manager -> CreateNtuple(ntName1.str(), ntTitle1.str());
-	fNtColId[0+8*i] = manager -> CreateNtupleDColumn("E_keV");	//deposited energy 
-	fNtColId[1+8*i] = manager -> CreateNtupleDColumn("l_um");	//chord length
-	manager -> FinishNtuple();
-	
-	// Creating Energy released by primaries Ntuple
-	std::ostringstream ntName2; ntName2 <<2+3*i<< "_energy_released_"<< SVside[i] << "um";
-	std::ostringstream ntTitle2; ntTitle2 << "energy_released_in" << SVside[i] << "um_side_SV";
-	manager -> CreateNtuple(ntName2.str(), ntTitle2.str());
-	fNtColId[2+8*i] = manager -> CreateNtupleDColumn("Elost_keV");
-	fNtColId[3+8*i] = manager -> CreateNtupleDColumn("Ein_keV");
-	fNtColId[4+8*i] = manager -> CreateNtupleDColumn("Eout_keV");
-	manager -> FinishNtuple();
+		
+		//Create Energy Deposition within SV Ntuple
+		std::ostringstream ntName1; ntName1 << SVside[i] << "um_deposited_energy";
+		manager -> CreateNtuple(ntName1.str(), "deposited_energy");
+		fNtColId[0+5*i] = manager -> CreateNtupleDColumn("E_keV");	//deposited energy 
+		fNtColId[1+5*i] = manager -> CreateNtupleDColumn("l_um");	//chord length
+ 
+		manager -> FinishNtuple();
 
-	//creating a ntuple, containing the information about secondary particles
-	std::ostringstream ntName3; ntName3 <<3+3*i<< "_secondary_particles_"<< SVside[i] << "um";
-	std::ostringstream ntTitle3; ntTitle3 << "secondary_particles_in" << SVside[i] << "um_side_SV";
-	manager -> CreateNtuple(ntName3.str(), ntTitle3.str());
-	fNtColId[5+8*i] = manager -> CreateNtupleDColumn("AA");
-	fNtColId[6+8*i] = manager -> CreateNtupleDColumn("ZZ");
-	fNtColId[7+8*i] = manager -> CreateNtupleDColumn("Kin_keV");
-	manager -> FinishNtuple();
-
+		// creating Energy lost by primaries Ntuple
+		std::ostringstream ntName2; ntName2 << SVside[i] << "um_energy_released";
+		manager -> CreateNtuple(ntName2.str(), "energy_released");
+		fNtColId[2+5*i] = manager -> CreateNtupleDColumn("Elost_keV");
+		fNtColId[3+5*i] = manager -> CreateNtupleDColumn("Ein_keV");
+		fNtColId[4+5*i] = manager -> CreateNtupleDColumn("Eout_keV");
+		manager -> FinishNtuple();
 	}
 
-
-	//Create Primary Energy Ntuple
-	manager -> CreateNtuple("13_primary_energy", "primary_energy");
-	fNtColId[32] = manager -> CreateNtupleDColumn("E_keV");
+/*	//creating a ntuple, containing the information about secondary particles
+	manager -> CreateNtuple("3_secondary_particles", "secondary_particles");
+	fNtColId[3] = manager -> CreateNtupleDColumn("AA");
+	fNtColId[4] = manager -> CreateNtupleDColumn("ZZ");
+	fNtColId[5] = manager -> CreateNtupleDColumn("Kin_keV");
 	manager -> FinishNtuple();
-
-
+*/
+  
 	factoryOn = true;    
 }
 
 
-void AnalysisManager::SetPrimaryEnergy(G4double energy)
+/*void AnalysisManager::SetPrimaryEnergy(G4double energy)
 {
 	G4AnalysisManager* manager = G4AnalysisManager::Instance();
-	manager -> FillNtupleDColumn(13, fNtColId[32], energy/keV);
-	manager -> AddNtupleRow(13); 
+	manager -> FillNtupleDColumn(1, fNtColId[0], energy/keV);
+	manager -> AddNtupleRow(1); 
 }
+*/
 
 void AnalysisManager::StoreEnergyDeposition(G4double edep, G4double pathlen, G4int SVid)
 {
 	G4AnalysisManager* manager = G4AnalysisManager::Instance();
-	manager -> FillNtupleDColumn(1+3*SVid, fNtColId[0+8*SVid], edep/keV);
-	manager -> FillNtupleDColumn(1+3*SVid, fNtColId[1+8*SVid], pathlen/um);
-	manager -> AddNtupleRow(1+3*SVid); 
+	manager -> FillNtupleDColumn(1+2*SVid, fNtColId[0+5*SVid], edep/keV);
+	manager -> FillNtupleDColumn(1+2*SVid, fNtColId[1+5*SVid], pathlen/um);
+	manager -> AddNtupleRow(1+2*SVid); 
 }
 
 void AnalysisManager::StorePrimaryEnergyLost(G4double elost, G4double ein, G4double eout, G4int SVid)
 {
 	G4AnalysisManager* manager = G4AnalysisManager::Instance();
-	manager -> FillNtupleDColumn(2+3*SVid, fNtColId[2+8*SVid], elost/keV);
-	manager -> FillNtupleDColumn(2+3*SVid, fNtColId[3+8*SVid], ein/keV);
-	manager -> FillNtupleDColumn(2+3*SVid, fNtColId[4+8*SVid], eout/keV);
-	manager -> AddNtupleRow(2+3*SVid);
+	manager -> FillNtupleDColumn(2+2*SVid, fNtColId[2+5*SVid], elost/keV);
+	manager -> FillNtupleDColumn(2+2*SVid, fNtColId[3+5*SVid], ein/keV);
+	manager -> FillNtupleDColumn(2+2*SVid, fNtColId[4+5*SVid], eout/keV);
+	manager -> AddNtupleRow(2+2*SVid);
 }
 
-void AnalysisManager::FillSecondaries(G4int AA, G4double charge, G4double energy, G4int SVid)
-{
+/*void AnalysisManager::FillSecondaries(G4int AA, G4double charge, G4double energy)
+  {
 
-  G4AnalysisManager* manager = G4AnalysisManager::Instance();
-  manager -> FillNtupleDColumn(3+3*SVid, fNtColId[5+8*SVid], AA);
-  manager -> FillNtupleDColumn(3+3*SVid, fNtColId[6+8*SVid], charge);
-  manager -> FillNtupleDColumn(3+3*SVid, fNtColId[7+8*SVid], energy/keV);
-  manager -> AddNtupleRow(3+3*SVid);  
-}
+    G4AnalysisManager* manager = G4AnalysisManager::Instance();
+    manager -> FillNtupleDColumn(3, fNtColId[3], AA);
+    manager -> FillNtupleDColumn(3, fNtColId[4], charge);
+    manager -> FillNtupleDColumn(3, fNtColId[5], energy/keV);
+    manager -> AddNtupleRow(3);  
+  }
+*/
  
-
 void AnalysisManager::finish() 
 {   
 	if (factoryOn) 
